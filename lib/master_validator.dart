@@ -1,6 +1,7 @@
 enum ValidatorFlags {
   Required,
   Email,
+  Number,
 }
 
 class MasterValidator {
@@ -26,7 +27,12 @@ class MasterValidator {
       if (flags.contains(ValidatorFlags.Email)) {
         if (!isValueEmpty(value) &&
             !MasterValidatorHelpers.checkEmail(value!)) {
-          return 'Invalid email';
+          return 'Invalid $msgPrefix';
+        }
+      }
+      if (flags.contains(ValidatorFlags.Number)) {
+        if (!isValueEmpty(value) && int.tryParse(value!) == null) {
+          return 'Invalid $msgPrefix';
         }
       }
 
