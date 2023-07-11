@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
         ),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       home: const FormValidationExample(),
     );
   }
@@ -78,6 +79,7 @@ class _FormValidationExampleState extends State<FormValidationExample> {
           const Text("Email"),
           Space.def,
           Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +100,7 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                     flags: [ValidatorFlags.Required],
                     msgPrefix: "Password",
                   ),
-                  prefixIcon: Icons.alternate_email_rounded,
+                  prefixIcon: Icons.key_rounded,
                   hintText: "Enter Password",
                   isSafeInput: true,
                 ),

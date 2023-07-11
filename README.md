@@ -2,6 +2,9 @@
 
 A simple and quick form validation library for Flutter.
 
+
+![](https://i.ibb.co/Lzx2VSY/example.gif)
+
 ## Getting Started
 
 ### Installation
