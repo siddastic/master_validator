@@ -1,7 +1,7 @@
 name: master_validator
 description: A simple and quick form validation library for Flutter.
 version: 0.0.1
-homepage:
+homepage: https://github.com/siddastic/master_validator
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
   flutter_test:
