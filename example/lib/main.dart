@@ -20,8 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _masterValidatorPlugin = MasterValidator();
-
   @override
   void initState() {
     super.initState();
@@ -76,7 +74,7 @@ class _FormValidationExampleState extends State<FormValidationExample> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
           const Space(20),
-          const Text("Email"),
+          const Text("Email (Required)"),
           Space.def,
           Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -85,22 +83,15 @@ class _FormValidationExampleState extends State<FormValidationExample> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Input(
-                  validator: MasterValidator.requiredAnd(
-                    flag: ValidatorFlags.Email,
-                    msgPrefix: "Email",
-                  ),
+                  validator: Validators.Required(next: Validators.Email()),
                   prefixIcon: Icons.alternate_email_rounded,
                   hintText: "Enter Email",
                 ),
                 const Space(20),
-                const Text("Password"),
+                const Text("Phone Number"),
                 Space.def,
                 Input(
-                  validator: MasterValidator.attach(
-                    flags: [ValidatorFlags.Required],
-                    msgPrefix: "Password",
-                  ),
-                  prefixIcon: Icons.key_rounded,
+                  prefixIcon: Icons.numbers,
                   hintText: "Enter Password",
                   isSafeInput: true,
                 ),

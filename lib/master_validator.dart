@@ -1,70 +1,169 @@
-enum ValidatorFlags {
-  Required,
-  Email,
-  Number,
+class MasterValidatorHelpers {
+  static bool checkEmail(String value) {
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
+  }
 }
 
-class MasterValidator {
-  static isValueEmpty(String? value) {
-    return value == null || value.trim().isEmpty;
-  }
-
-  static String? Function(String? value)? attach({
-    List<ValidatorFlags>? flags,
-    String msgPrefix = 'Field',
-    String? Function(String value)? customValidation,
+// Validators
+class Validators {
+  static String? Function(String? value)? Required({
+    String errorMessage = 'Field cannot be empty',
+    String? Function(String value)? next,
   }) {
-    if (flags == null || flags.isEmpty) {
-      return null;
-    }
-
     return (value) {
-      if (flags.contains(ValidatorFlags.Required) &&
-          (value == null || value.trim().isEmpty)) {
-        return '$msgPrefix is required';
+      if (value == null || value.trim().isEmpty) {
+        return errorMessage;
       }
 
-      if (flags.contains(ValidatorFlags.Email)) {
-        if (!isValueEmpty(value) &&
-            !MasterValidatorHelpers.checkEmail(value!)) {
-          return 'Invalid $msgPrefix';
-        }
-      }
-      if (flags.contains(ValidatorFlags.Number)) {
-        if (!isValueEmpty(value) && int.tryParse(value!) == null) {
-          return 'Invalid $msgPrefix';
-        }
-      }
-
-      if (customValidation != null) {
-        return customValidation(value!);
+      if (next != null) {
+        return next(value);
       }
 
       return null;
     };
   }
 
-  static String? Function(String? value)? requiredAnd({
-    ValidatorFlags? flag,
-    String msgPrefix = 'Field',
-    String? Function(String value)? customValidation,
+  static String? Function(String? value)? Email({
+    String errorMessage = 'Invalid email',
+    String? Function(String value)? next,
   }) {
-    if (flag == null) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (!MasterValidatorHelpers.checkEmail(value)) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
       return null;
-    }
-
-    return attach(
-      flags: [ValidatorFlags.Required, flag],
-      msgPrefix: msgPrefix,
-      customValidation: customValidation,
-    );
+    };
   }
-}
 
-class MasterValidatorHelpers {
-  static bool checkEmail(String value) {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value);
+  static String? Function(String? value)? Number({
+    String errorMessage = 'Invalid number',
+    String? Function(String value)? next,
+    bool integerOnly = false,
+  }) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (integerOnly) {
+        if (int.tryParse(value) == null) {
+          return errorMessage;
+        }
+      } else {
+        if (num.tryParse(value) == null) {
+          return errorMessage;
+        }
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
+  }
+
+  static String? Function(String? value)? MinLength({
+    required int length,
+    String errorMessage = 'Minimum length is *min_len*',
+    String? Function(String value)? next,
+  }) {
+    if (errorMessage.contains('*min_len*')) {
+      errorMessage = errorMessage.replaceAll('*min_len*', length.toString());
+    }
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (value.length < length) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
+  }
+
+  static String? Function(String? value)? MaxLength({
+    required int length,
+    String errorMessage = 'Maximum length is *max_len*',
+    String? Function(String value)? next,
+  }) {
+    if (errorMessage.contains('*max_len*')) {
+      errorMessage = errorMessage.replaceAll('*max_len*', length.toString());
+    }
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (value.length > length) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
+  }
+
+  static String? Function(String? value)? Url({
+    String errorMessage = 'Invalid url',
+    String? Function(String value)? next,
+  }) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (!Uri.parse(value).isAbsolute) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
+  }
+
+  static String? Function(String? value)? Regex({
+    required String pattern,
+    String errorMessage = 'Invalid value',
+    String? Function(String value)? next,
+  }) {
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (!RegExp(pattern).hasMatch(value)) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
   }
 }
