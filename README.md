@@ -1,6 +1,15 @@
 # master_validator
 
-A simple and quick form validation library for Flutter.
+![Version](https://img.shields.io/pub/v/master_validator.svg)
+![GitHub](https://img.shields.io/github/license/siddastic/master_validator)
+
+
+Simple and quick form validation library for Flutter.
+
+* Easy to get started with
+* Lightweight
+* Customizable Error Messages
+* Validator Chaining
 
 
 ![](https://i.ibb.co/Lzx2VSY/example.gif)
@@ -9,11 +18,10 @@ A simple and quick form validation library for Flutter.
 
 ### Installation
 
-Add `master_validator` as dependency to your flutter project by adding this lines to `pubspec.yaml`.
+Add `master_validator` as dependency to your flutter project by running the following command in `project-root`.
 
 ```yaml
-dependencies:
-  master_validator: ">=0.0.1"
+flutter pub add master_validator
 ```
 
 Then run `flutter pub get` to install required dependencies.
@@ -29,36 +37,72 @@ Import `master_validator` package to your dart widgets by writing:
 import 'package:master_validator/master_validator.dart';
 ```
 
-This makes the `MasterValidator` class available in your codespace
+This makes the `Validators` class available in your codespace
 
 
 ### Basic Required Field Validation
 
+Use `Validators.Required()` to make a field required.
+
 ```dart
 TextFormField(
-    validator: MasterValidator.attach(
-        flags: [ValidatorFlags.Required]
-    ),
+    validator: Validators.Required(
+        errorMessage : "This field cannot be left empty",
+    )
 ),
 ```
 
 ### Email Validation
 ```dart
 TextFormField(
-    validator: MasterValidator.attach(
-        flags: [ValidatorFlags.Required, ValidatorFlags.Email],
-        msgPrefix: "Email",
+    validator: Validators.Required(
+        next : Validators.Email(),
     ),
 ),
 ```
 
-Note : By Default all validator flags support non required field, which means that if the field has an email validator flag but doesn't have the required flag with it, it wouldn't give an error message if the textfield is empty, to change this behaviour, use `MasterValidator.requiredAnd`, for Example
+### Inbuild Validation methods :
+
+- Validators.Required()
+- Validators.Email()
+- Validators.Number()
+- Validators.Minlength()
+- Validators.Maxlength()
+- Validators.Url()
+- Validators.Regex()
+
+Every validator has an `errorMessage` parameter to customize the error message and a `next` parameter to chain another validator
+
+### Using Multiple Validators (Chaining Validators)
+
+All validators take a `next` argument in which you can specify another validator (a custom function, or another predefined validator) like :
 
 ```dart
 TextFormField(
-    validator: MasterValidator.requiredAnd(
-        flag: ValidatorFlags.Email,
-        msgPrefix: "Email",
+    validator: Validators.Required(
+        next : Validators.Email(
+            next : Validators.Maxlength(50)
+        ),
+    ),
+),
+```
+
+> **Note:** While Chaining, Order MATTERS!
+
+
+> **NOTE:**  By default All Validators except `Validators.Required()` will not throw an error if the data is empty/null, this means if you defined a validator like :
+
+```dart
+TextFormField(
+    validator: Validators.Email(),
+),
+```
+> It means the field acts as an optional field but if something is entered it must qualify as an email, to change this behaviour, and to make the field required, use `Validators.Required()` before any other validator, for example -
+
+```dart
+TextFormField(
+    validator: Validators.Required(
+        next : Validators.Url(),
     ),
 ),
 ```

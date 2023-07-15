@@ -10,8 +10,6 @@ class MasterValidatorHelpers {
 
 // Validators
 class Validators {
-  // dart documentation
-
   /// Returns a validator that checks if a string is empty.
   ///
   /// ### Arguments :
@@ -70,6 +68,34 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is a valid email.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string is not a valid email.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Email(),
+  /// ),
+  /// ```
+  ///
+  /// ### Usage without TextFormField :
+  ///
+  /// ```dart
+  /// final validator = Validators.Email();
+  ///
+  /// validator('hello'); // 'Invalid email'
+  /// ```
+  ///
+  /// You can also chain validators like this:
+  ///
+  /// ```dart
+  /// final validator = Validators.Required(
+  /// next: Validators.Email(),
+  /// );
   static String? Function(String? value)? Email({
     String errorMessage = 'Invalid email',
     String? Function(String value)? next,
@@ -91,6 +117,20 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is a valid number.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string is not a valid number.
+  /// - `next` : A validator to run after this validator.
+  /// - `integerOnly` : If set to true, the validator will only accept integers.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Number(),
+  /// ),
+  /// ```
   static String? Function(String? value)? Number({
     String errorMessage = 'Invalid number',
     String? Function(String value)? next,
@@ -119,6 +159,20 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is at least a certain length.
+  ///
+  /// ### Arguments :
+  /// - `length` : The minimum length of the string.
+  /// - `errorMessage` : The error message to return if the string is not at least a certain length.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.MinLength(length: 5),
+  /// ),
+  /// ```
   static String? Function(String? value)? MinLength({
     required int length,
     String errorMessage = 'Minimum length is *min_len*',
@@ -144,6 +198,20 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is at most a certain length.
+  ///
+  /// ### Arguments :
+  /// - `length` : The maximum length of the string.
+  /// - `errorMessage` : The error message to return if the string is not at most a certain length.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.MaxLength(length: 5),
+  /// ),
+  /// ```
   static String? Function(String? value)? MaxLength({
     required int length,
     String errorMessage = 'Maximum length is *max_len*',
@@ -169,6 +237,19 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is a valid url.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string is not a valid url.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Url(),
+  /// ),
+  /// ```
   static String? Function(String? value)? Url({
     String errorMessage = 'Invalid url',
     String? Function(String value)? next,
@@ -192,6 +273,20 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string is matches given regex pattern.
+  ///
+  /// ### Arguments :
+  /// - `pattern` : The regex pattern to match.
+  /// - `errorMessage` : The error message to return if the string does not match the pattern.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Regex(pattern: r'^[a-zA-Z]+$'),
+  /// ),
+  /// ```
   static String? Function(String? value)? Regex({
     required String pattern,
     String errorMessage = 'Invalid value',

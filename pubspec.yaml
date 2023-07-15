@@ -45,9 +45,6 @@ flutter:
         pluginClass: MasterValidatorPlugin
       windows:
         pluginClass: MasterValidatorPluginCApi
-      web:
-        pluginClass: MasterValidatorPlugin
-        fileName: lib/master_validator.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
