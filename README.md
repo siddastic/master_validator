@@ -1,6 +1,6 @@
 # master_validator
 
-![Version](https://img.shields.io/pub/v/master_validator.svg)
+[![Version](https://img.shields.io/pub/v/master_validator.svg)](https://pub.dev/packages/master_validator)
 ![GitHub](https://img.shields.io/github/license/siddastic/master_validator)
 
 
