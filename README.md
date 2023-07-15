@@ -2,7 +2,9 @@
 
 [![Version](https://img.shields.io/pub/v/master_validator.svg)](https://pub.dev/packages/master_validator)
 ![GitHub](https://img.shields.io/github/license/siddastic/master_validator)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ac15884c-8c64-43b7-b82c-4637db9498c2/deploy-status)](https://app.netlify.com/sites/master-validator/deploys)
 
+### [Live Demo](https://master-validator.netlify.app/)
 
 Simple and quick form validation library for Flutter.
 
