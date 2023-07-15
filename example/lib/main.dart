@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:master_validator/master_validator.dart';
 import 'package:master_validator_example/widgets/primary_button.dart';
 
