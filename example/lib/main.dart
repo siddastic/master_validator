@@ -55,6 +55,8 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+enum SnackbarMessageType { Success, Error }
+
 class FormValidationExample extends StatefulWidget {
   const FormValidationExample({super.key});
 
@@ -64,6 +66,18 @@ class FormValidationExample extends StatefulWidget {
 
 class _FormValidationExampleState extends State<FormValidationExample> {
   final _formKey = GlobalKey<FormState>();
+
+  void showSnackbar(String message, SnackbarMessageType type) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor:
+            type == SnackbarMessageType.Success ? Colors.green : Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +88,7 @@ class _FormValidationExampleState extends State<FormValidationExample> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
           const Space(20),
-          const Text("Email (Required)"),
+          const Text("Validators.Email (Required)"),
           Space.def,
           Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -85,26 +99,66 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                 Input(
                   validator: Validators.Required(next: Validators.Email()),
                   prefixIcon: Icons.alternate_email_rounded,
-                  hintText: "Enter Email",
+                  hintText: "Email",
                 ),
                 const Space(20),
-                const Text("Phone Number"),
+                const Text("Validators.Number (Optional)"),
                 Space.def,
                 Input(
+                  validator: Validators.Number(),
                   prefixIcon: Icons.numbers,
-                  hintText: "Enter Password",
-                  isSafeInput: true,
+                  hintText: "Phone Number",
+                ),
+                const Space(20),
+                const Text(
+                    "Validators.Minlength + Validators.Maxlength (Required)"),
+                Space.def,
+                Input(
+                  validator: Validators.Required(
+                    errorMessage: "Username cannot be empty",
+                    next: Validators.MinLength(
+                      errorMessage: "Username must be at least 3 characters",
+                      length: 3,
+                      next: Validators.MaxLength(
+                        length: 8,
+                        errorMessage: "Username must be at most 8 characters",
+                      ),
+                    ),
+                  ),
+                  prefixIcon: Icons.person,
+                  hintText: "Username",
+                ),
+                const Space(20),
+                const Text("Validators.URL (Optional)"),
+                Space.def,
+                Input(
+                  validator: Validators.Url(),
+                  prefixIcon: Icons.link,
+                  hintText: "URL",
+                ),
+                const Space(20),
+                const Text("Validators.Regex (Optional)"),
+                Space.def,
+                Input(
+                  validator: Validators.Regex(
+                    pattern: r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$',
+                    errorMessage: "Invalid Hex Color Code",
+                  ),
+                  prefixIcon: Icons.link,
+                  hintText: "Hex Color Code ex - #000000",
                 ),
               ],
             ),
           ),
           Space.def,
           PrimaryButton(
-            label: "Submit",
+            label: "Validate",
             onclick: () {
               // validate form
               if (_formKey.currentState!.validate()) {
-                // do something
+                showSnackbar("Form is valid", SnackbarMessageType.Success);
+              } else {
+                showSnackbar("Form is invalid", SnackbarMessageType.Error);
               }
             },
           ),

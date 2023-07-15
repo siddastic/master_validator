@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class MasterValidatorHelpers {
   static bool checkEmail(String value) {
     return RegExp(
@@ -8,6 +10,49 @@ class MasterValidatorHelpers {
 
 // Validators
 class Validators {
+  // dart documentation
+
+  /// Returns a validator that checks if a string is empty.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string is empty.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  ///  validator: Validators.Required(),
+  /// ),
+  ///  ```
+  ///
+  /// ### Usage without TextFormField :
+  ///
+  /// ```dart
+  /// final validator = Validators.Required();
+  ///
+  /// validator(''); // 'Field cannot be empty'
+  ///
+  /// validator('   '); // 'Field cannot be empty'
+  ///
+  /// validator('hello'); // null
+  ///
+  /// ```
+  ///
+  /// You can also chain validators like this:
+  ///
+  /// ```dart
+  /// final validator = Validators.Required(
+  ///  next: Validators.Email(),
+  /// );
+  ///
+  /// validator(''); // 'Field cannot be empty'
+  ///
+  /// validator('   '); // 'Field cannot be empty'
+  ///
+  /// validator('hello'); // 'Invalid email'
+  ///
+  /// ```
   static String? Function(String? value)? Required({
     String errorMessage = 'Field cannot be empty',
     String? Function(String value)? next,
@@ -133,7 +178,9 @@ class Validators {
         return null;
       }
 
-      if (!Uri.parse(value).isAbsolute) {
+      if (!RegExp(
+              r"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}")
+          .hasMatch(value)) {
         return errorMessage;
       }
 
