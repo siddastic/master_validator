@@ -153,6 +153,18 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                   prefixIcon: Icons.link,
                   hintText: "Hex Color Code ex - #000000",
                 ),
+                const Space(20),
+                const Text("Validators.Equals"),
+                Space.def,
+                Input(
+                  validator: Validators.Equals(
+                    value: '123456',
+                    errorMessage:
+                        "Password matches with previous password, enter a new password",
+                  ),
+                  prefixIcon: Icons.key,
+                  hintText: "New Password (123456)",
+                ),
               ],
             ),
           ),

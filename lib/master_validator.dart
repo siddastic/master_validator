@@ -358,4 +358,40 @@ class Validators {
       return null;
     };
   }
+
+  /// Returns a validator that checks if a string equals to given string.
+  ///
+  /// ### Arguments :
+  /// - `value` : The value to match
+  /// - `errorMessage` : The error message to return if the string does not match the pattern.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Equals(value : 'previous_password'),
+  /// ),
+  /// ```
+  static String? Function(String? value)? Equals({
+    required String value,
+    String errorMessage = 'Value matches to the given value',
+    String? Function(String value)? next,
+  }) {
+    return (v) {
+      if (v == null || v.trim().isEmpty) {
+        return null;
+      }
+
+      if (v == value) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(v);
+      }
+
+      return null;
+    };
+  }
 }

@@ -73,6 +73,7 @@ TextFormField(
 - Validators.Maxlength()
 - Validators.Url()
 - Validators.Regex()
+- Validators.Equals()
 
 Every validator has an `errorMessage` parameter to customize the error message and a `next` parameter to chain another validator
 
