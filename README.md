@@ -68,6 +68,7 @@ TextFormField(
 - Validators.Required()
 - Validators.Email()
 - Validators.Number()
+- Validators.LengthBetween()
 - Validators.Minlength()
 - Validators.Maxlength()
 - Validators.Url()

@@ -159,6 +159,56 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a string's length lies between the values provided
+  ///
+  /// ### Arguments :
+  /// - `min` : The minimum length of the string.
+  /// - `max` : The maximum length of the string.
+  /// - `errorMessage` : The error message to return if the string is not at least a certain length.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.LengthBetween(3,11),
+  /// ),
+  /// ```
+  static String? Function(String? value)? LengthBetween(
+    int min,
+    int max, {
+    String errorMessage =
+        'Field Should be atleast *min_len* and at most *max_len* characters long',
+    String? Function(String value)? next,
+  }) {
+    assert(min <= max, 'min cannot be greater than max');
+    if (errorMessage.contains('*min_len*')) {
+      errorMessage = errorMessage.replaceAll('*min_len*', min.toString());
+    }
+    if (errorMessage.contains('*max_len*')) {
+      errorMessage = errorMessage.replaceAll('*max_len*', max.toString());
+    }
+    return (value) {
+      if (value == null || value.trim().isEmpty) {
+        return null;
+      }
+
+      if (value.length < min) {
+        return errorMessage;
+      }
+
+      if (value.length > max) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(value);
+      }
+
+      return null;
+    };
+  }
+
   /// Returns a validator that checks if a string is at least a certain length.
   ///
   /// ### Arguments :

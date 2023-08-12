@@ -127,6 +127,14 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                   hintText: "Username",
                 ),
                 const Space(20),
+                const Text("Validators.LengthBetween"),
+                Space.def,
+                Input(
+                  validator: Validators.LengthBetween(3, 10),
+                  prefixIcon: Icons.key,
+                  hintText: "Password",
+                ),
+                const Space(20),
                 const Text("Validators.URL (Optional)"),
                 Space.def,
                 Input(
