@@ -375,7 +375,7 @@ class Validators {
     };
   }
 
-  /// Returns a validator that checks if a string equals to given string.
+  /// Returns a validator that checks if a string equals to given string. It can be used in specific cases like password confirmation.
   ///
   /// ### Arguments :
   /// - `value` : The value to match
@@ -386,7 +386,7 @@ class Validators {
   ///
   /// ```dart
   /// TextFormField(
-  /// validator: Validators.Equals(value : 'previous_password'),
+  /// validator: Validators.Equals(value : 'value_to_match'),
   /// ),
   /// ```
   static String? Function(String? value)? Equals({
@@ -401,6 +401,52 @@ class Validators {
 
       if (v == value) {
         return errorMessage;
+      }
+
+      if (next != null) {
+        return next(v);
+      }
+
+      return null;
+    };
+  }
+
+  /// Returns a validator that checks if a file name is valid.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string does not match the pattern.
+  /// - `next` : A validator to run after this validator.
+  /// - `extensionWhereIn` : A list of allowed extensions. If not provided, all extensions are allowed.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Equals(value : 'value_to_match'),
+  /// ),
+  /// ```
+  static String? Function(String? value)? FileName({
+    required String value,
+    String errorMessage = 'Value matches to the given value',
+    String? Function(String value)? next,
+    List<String>? extensionWhereIn,
+  }) {
+    return (v) {
+      if (v == null || v.trim().isEmpty) {
+        return null;
+      }
+
+      // validate file name
+      final fileNameRegex = RegExp(r'[^\\/:*?"<>|\r\n]+$');
+      if (!fileNameRegex.hasMatch(v)) {
+        return errorMessage;
+      }
+
+      if (extensionWhereIn != null) {
+        final ext = v.split('.').last;
+        if (!extensionWhereIn.contains(ext)) {
+          return errorMessage;
+        }
       }
 
       if (next != null) {
