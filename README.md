@@ -68,6 +68,7 @@ TextFormField(
 - Validators.Required()
 - Validators.Email()
 - Validators.Number()
+   - with optional `integerOnly` `allowNegative` `allowDecimal` parameters
 - Validators.LengthBetween()
 - Validators.Minlength()
 - Validators.Maxlength()

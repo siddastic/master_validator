@@ -123,6 +123,8 @@ class Validators {
   /// - `errorMessage` : The error message to return if the string is not a valid number.
   /// - `next` : A validator to run after this validator.
   /// - `integerOnly` : If set to true, the validator will only accept integers.
+  /// - `allowNegative` : If set to false, the validator will not accept negative numbers.
+  /// - `allowDecimal` : If set to false, the validator will not accept decimal numbers.
   ///
   /// ### Usage :
   ///
@@ -135,7 +137,13 @@ class Validators {
     String errorMessage = 'Invalid number',
     String? Function(String value)? next,
     bool integerOnly = false,
+    bool allowNegative = true,
+    bool allowDecimal = true,
   }) {
+    assert(
+        !integerOnly || (integerOnly && !allowDecimal),
+        'integerOnly and allowDecimal cannot both be true. '
+        'If you want to allow decimal numbers, set integerOnly to false');
     return (value) {
       if (value == null || value.trim().isEmpty) {
         return null;
@@ -149,6 +157,14 @@ class Validators {
         if (num.tryParse(value) == null) {
           return errorMessage;
         }
+      }
+
+      if (!allowNegative && value.startsWith('-')) {
+        return errorMessage;
+      }
+
+      if (!allowDecimal && value.contains('.')) {
+        return errorMessage;
       }
 
       if (next != null) {
