@@ -411,6 +411,41 @@ class Validators {
     };
   }
 
+  /// Returns a validator that checks if a directory name is valid.
+  ///
+  /// ### Arguments :
+  /// - `errorMessage` : The error message to return if the string does not match the pattern.
+  /// - `next` : A validator to run after this validator.
+  ///
+  /// ### Usage :
+  ///
+  /// ```dart
+  /// TextFormField(
+  /// validator: Validators.Equals(value : 'value_to_match'),
+  /// ),
+  /// ```
+  static String? Function(String? value)? DirectoryName({
+    String errorMessage = 'Invalid Directory Name',
+    String? Function(String value)? next,
+  }) {
+    return (v) {
+      if (v == null || v.trim().isEmpty) {
+        return null;
+      }
+
+      // validate directory name
+      if (!RegExp(r'^[a-zA-Z0-9-_]+$').hasMatch(v)) {
+        return errorMessage;
+      }
+
+      if (next != null) {
+        return next(v);
+      }
+
+      return null;
+    };
+  }
+
   /// Returns a validator that checks if a file name is valid.
   ///
   /// ### Arguments :
@@ -426,8 +461,7 @@ class Validators {
   /// ),
   /// ```
   static String? Function(String? value)? FileName({
-    required String value,
-    String errorMessage = 'Value matches to the given value',
+    String errorMessage = 'Invalid File Name',
     String? Function(String value)? next,
     List<String>? extensionWhereIn,
   }) {
