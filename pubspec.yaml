@@ -1,6 +1,6 @@
 name: master_validator
 description: A simple and quick form validation library for Flutter, containing a set of ready-to-use validator functions.
-version: 1.0.1
+version: 1.1.0
 homepage: https://github.com/siddastic/master_validator
 repository: https://github.com/siddastic/master_validator
 

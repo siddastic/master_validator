@@ -75,6 +75,8 @@ TextFormField(
 - Validators.Url()
 - Validators.Regex()
 - Validators.Equals()
+- Validators.FileName()
+- Validators.DirectoryName()
 
 Every validator has an `errorMessage` parameter to customize the error message and a `next` parameter to chain another validator
 
