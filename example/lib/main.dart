@@ -154,7 +154,7 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                   hintText: "Hex Color Code ex - #000000",
                 ),
                 const Space(20),
-                const Text("Validators.Equals"),
+                const Text("Validators.Equals (Optional)"),
                 Space.def,
                 Input(
                   validator: Validators.Equals(
@@ -166,13 +166,21 @@ class _FormValidationExampleState extends State<FormValidationExample> {
                   hintText: "New Password (123456)",
                 ),
                 const Space(20),
-                // const Text("Validators.FileName"),
-                // Space.def,
-                // Input(
-                //   validator: Validators.FileName(),
-                //   prefixIcon: Icons.file_present,
-                //   hintText: "File Name",
-                // ),
+                const Text("Validators.FileName (Optional)"),
+                Space.def,
+                Input(
+                  validator: Validators.FileName(),
+                  prefixIcon: Icons.file_present,
+                  hintText: "File Name",
+                ),
+                const Space(20),
+                const Text("Validators.FileSize"),
+                Space.def,
+                Input(
+                  validator: Validators.DirectoryName(),
+                  prefixIcon: Icons.folder,
+                  hintText: "Directory Name (Optional)",
+                ),
               ],
             ),
           ),

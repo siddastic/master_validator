@@ -421,7 +421,7 @@ class Validators {
   ///
   /// ```dart
   /// TextFormField(
-  /// validator: Validators.Equals(value : 'value_to_match'),
+  /// validator: Validators.DirectoryName(),
   /// ),
   /// ```
   static String? Function(String? value)? DirectoryName({
@@ -457,7 +457,7 @@ class Validators {
   ///
   /// ```dart
   /// TextFormField(
-  /// validator: Validators.Equals(value : 'value_to_match'),
+  /// validator: Validators.FileName()
   /// ),
   /// ```
   static String? Function(String? value)? FileName({
@@ -465,14 +465,15 @@ class Validators {
     String? Function(String value)? next,
     List<String>? extensionWhereIn,
   }) {
+    assert(extensionWhereIn == null || extensionWhereIn.isNotEmpty,
+        'extensionWhereIn cannot be empty');
     return (v) {
       if (v == null || v.trim().isEmpty) {
         return null;
       }
 
-      // validate file name
-      final fileNameRegex = RegExp(r'[^\\/:*?"<>|\r\n]+$');
-      if (!fileNameRegex.hasMatch(v)) {
+      // validate file name without extension
+      if (!RegExp(r'^[a-zA-Z0-9-_]+$').hasMatch(v.split('.').first)) {
         return errorMessage;
       }
 
