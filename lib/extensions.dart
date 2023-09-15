@@ -1,7 +1,7 @@
 import 'package:master_validator/validators.dart';
 
 extension ValidStringExt on String {
-  bool isEmail() {
+  bool get isEmail {
     return Validators.Required(next: Validators.Email())!(this) == null;
   }
 
@@ -19,7 +19,7 @@ extension ValidStringExt on String {
         null;
   }
 
-  bool hasLengthBetween({int min = 0, int max = 1}) {
+  bool hasLengthBetween(int min, int max) {
     return Validators.LengthBetween(min, max)!(this) == null;
   }
 
