@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Added new Validator-Extensions on String class
+
 ## 1.1.0
 
 * Added new Validators
