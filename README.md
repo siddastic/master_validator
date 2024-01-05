@@ -5,6 +5,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ac15884c-8c64-43b7-b82c-4637db9498c2/deploy-status)](https://app.netlify.com/sites/master-validator/deploys)
 
 ### [Live Demo](https://master-validator.netlify.app/)
+### [Documentation](https://siddastic.github.io/mv-docs/default-topic.html)
 
 Simple and quick form validation library for Flutter.
 
@@ -16,7 +17,14 @@ Simple and quick form validation library for Flutter.
 
 ![](https://i.ibb.co/Lzx2VSY/example.gif)
 
+---
+
+## **View New Documentation**
+
+### [Documentation](https://siddastic.github.io/mv-docs/default-topic.html)
+
 ## Getting Started
+
 
 ### Installation
 
@@ -114,26 +122,6 @@ TextFormField(
 ),
 ```
 
----
-
-### Master Validator by default also adds up the following extensions to `String` class :
-
-- `isEmail`
-- `isInteger`
-- `isDouble`
-- `isValidDirectoryName`
-- `isValidURL`
-- `hasLengthBetween(min,max)`
-
-All of these returns a boolen value which can be used as :
-
-```dart
-String email = "someone@org.com";
-
-if(email.isEmail){
-    print("Valid Email");
-}
-```
 
 
 For detailed usage, check [example/lib](https://pub.dev/packages/master_validator/example)
