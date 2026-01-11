@@ -1,3 +1,7 @@
+## 1.3.1
+
+* Enable web platform in example/
+
 ## 1.3.0
 
 * Upgrade to sdk ^3.10.4
