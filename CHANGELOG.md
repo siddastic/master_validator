@@ -1,3 +1,7 @@
+## 1.3.0
+
+* Upgrade to sdk ^3.10.4
+
 ## 1.2.0
 
 * Added new Validator-Extensions on String class

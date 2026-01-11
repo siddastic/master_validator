@@ -1,4 +1,4 @@
-library master_validator;
+library;
 
 export 'helpers.dart';
 export 'validators.dart';

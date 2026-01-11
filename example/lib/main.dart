@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: const Color(0xff262626),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          color: Color(0xff262626),
+          backgroundColor: Color(0xff262626),
           elevation: 0,
           titleTextStyle: TextStyle(
             color: Colors.white,
